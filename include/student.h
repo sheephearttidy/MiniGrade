@@ -21,3 +21,13 @@ typedef struct Student{
     ScoreValue score;
     ScoreFlags flags;
 }Student;
+
+/* ===== 全局数据 ===== */
+extern Student global_students[100];   // 学生数组，最多100个
+extern size_t  global_student_count;   // 当前学生数量
+
+/* ===== 函数声明 ===== */
+ErrCode   student_add(int id, const char* name, int score);
+Student*  student_find_by_id(int id);
+void      student_sort(CmpFn cmp);
+void      student_foreach(void (*visit)(Student*, void*), void* ctx);
