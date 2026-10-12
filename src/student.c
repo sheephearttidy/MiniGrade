@@ -40,8 +40,48 @@ ErrCode   student_add(int id, const char* name, int score)
 
 };
 
-Student*  student_find_by_id(int id);
+Student* student_find_by_id(int id) // 查找学生
+{
+    for (size_t i = 0; i < global_student_count; i++) {
+        if (global_students[i].id == id && global_students[i].flags.valid) // 判断是否有效学生 :) 学生被封了。
+            return &global_students[i];
+    }
+    return NULL;
+}
 
-void      student_sort(CmpFn cmp);
+int cmp_by_id(const Student* a, const Student* b)
+{
+    return a->id - b->id;
+}
 
-void      student_foreach(void (*visit)(Student*, void*), void* ctx);
+int cmp_by_name(const Student* a, const Student* b)
+{
+    return strcmp(a->name, b->name);
+}
+
+int cmp_by_score(const Student* a, const Student* b)
+{
+    return a->score.i - b->score.i;
+}
+
+void student_sort(CmpFn cmp) // 排序学生 按ID、姓名、成绩 明显的回调函数，调用者传入比较函数
+{
+    for (size_t i = 0; i < global_student_count; i++) {
+        for (size_t j = i + 1; j < global_student_count; j++) {
+            if (cmp(&global_students[i], &global_students[j]) > 0) {
+                Student tmp = global_students[i];
+                global_students[i] = global_students[j];
+                global_students[j] = tmp;
+            }
+        }
+    }
+}
+
+// 遍历所有学生
+void student_foreach(void (*visit)(Student*, void*), void* ctx) // ctx 是额外数据
+{
+    for (size_t i = 0; i < global_student_count; i++) {
+        if (global_students[i].flags.valid)
+            visit(&global_students[i], ctx);
+    }
+}

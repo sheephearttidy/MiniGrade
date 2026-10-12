@@ -31,3 +31,7 @@ ErrCode   student_add(int id, const char* name, int score);
 Student*  student_find_by_id(int id);
 void      student_sort(CmpFn cmp);
 void      student_foreach(void (*visit)(Student*, void*), void* ctx);
+
+int cmp_by_id(const Student* a, const Student* b);
+int cmp_by_name(const Student* a, const Student* b);
+int cmp_by_score(const Student* a, const Student* b);
