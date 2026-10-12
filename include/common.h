@@ -19,3 +19,8 @@ typedef struct Student Student; // 学生结构体的声明
 
 typedef int (*CmpFn)(const Student*, const Student*); // 比较函数指针
 typedef ErrCode (*CmdFn)(int argc, char** argv); // 命令函数指针
+// 利用typedef创建了一个名为CmdFn的类型，用于指向命令函数的指针
+
+/*
+CmdFn f; 等价于 ErrCode (*f)(int argc, char** argv);
+*/

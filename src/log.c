@@ -7,7 +7,7 @@ int is_log_open = 0; // 日志开关
 
 void log_info(const char* fmt, ...){
     // 如果日志开关关闭，直接返回，退出函数
-    if (!is_log_open) return;
+    if (!is_log_open) return; // 其实一直都在调用，只是没有打印日志。
     // 如果日志开关开启，打印日志
     va_list args;
     va_start(args, fmt); // 把游标放在第一个可变参数上。

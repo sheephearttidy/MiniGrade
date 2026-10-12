@@ -2,7 +2,7 @@
 #include"common.h"
 
 // switch 语句，根据错误码返回对应的错误信息
-const char* err_msg(ErrCode e){
+const char* err_msg(ErrCode e){ // 留给main函数调用
     // 之所以用const char* 是因为错误代码通常是只读的字面量。
     /*
     C/C++ 里函数不能直接返回数组，而字符串字面量 "Success" 本身就是一个字符数组。

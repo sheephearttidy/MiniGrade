@@ -126,8 +126,6 @@ static ErrCode cmd_log(int argc, char** argv)
 
 static ErrCode cmd_quit(int argc, char** argv)
 {
-    (void)argc;
-    (void)argv;
     printf("再见!\n");
     exit(0);
     return OK;
@@ -135,9 +133,9 @@ static ErrCode cmd_quit(int argc, char** argv)
 
 static const struct {
     const char* name;
-    CmdFn        fn;
+    CmdFn fn; // 命令的 函数指针(利用typedef定义)
 } cmd_table[] = {
-    {"help",  cmd_help},
+    {"help",  cmd_help}, // 这里存的函数地址
     {"add",   cmd_add},
     {"list",  cmd_list},
     {"find",  cmd_find},
@@ -148,17 +146,22 @@ static const struct {
     {"exit",  cmd_quit},
 };
 
-ErrCode dispatch(int argc, char** argv)
+ErrCode dispatch(int argc, char** argv) // 分发命令
 {
-    if (argc < 1 || argv[0] == NULL)
-        return ERR_UNKNOWN_CMD;
+    if (argc < 1 || argv[0] == NULL) // 如果用户输入为空 ，则返回错误
+        return ERR_UNKNOWN_CMD;  // 返回未知命令错误
 
-    int n = sizeof(cmd_table) / sizeof(cmd_table[0]);
+    int n = sizeof(cmd_table) / sizeof(cmd_table[0]); // 命令表的大小
 
     for (int i = 0; i < n; i++) {
-        if (strcmp(argv[0], cmd_table[i].name) == 0)
-            return cmd_table[i].fn(argc, argv);
+        if (strcmp(argv[0], cmd_table[i].name) == 0) // 如果用户输入的命令与命令表中的命令匹配
+            return cmd_table[i].fn(argc, argv); // 调用命令函数
+            /* 
+            fn是结构体成员，指向命令函数的指针。
+            cmd_table[i].fn(argc, argv) 这个是结构体，直接获得到fn函数的地址，
+            调用fn函数，传入argc和argv。
+            */
     }
 
-    return ERR_UNKNOWN_CMD;
+    return ERR_UNKNOWN_CMD; // 如果用户输入的命令与命令表中的命令都不匹配 ，则返回错误
 }

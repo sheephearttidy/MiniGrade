@@ -25,7 +25,15 @@ ErrCode   student_add(int id, const char* name, int score)
             return ERR_DUP; // 重复添加
     }
 
-    Student* s = &global_students[global_student_count]; // 拿到空位的地址
+    Student* s = &global_students[global_student_count]; // Student类型的指针 拿到空位的地址
+    /*
+    typedef struct Student{
+        int id;
+        char name[32];
+        ScoreValue score;
+        ScoreFlags flags;
+    }Student;
+    */
     s->id = id; // 在空位填充ID
     strcpy(s->name, name); // 在空位填充姓名
     s->score.i = score; // 在空位填充成绩

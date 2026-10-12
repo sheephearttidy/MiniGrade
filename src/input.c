@@ -75,3 +75,10 @@ ErrCode read_score(const char* s, int* out)
 
     return OK;
 }
+/*
+标准库函数<string.h>
+strlen：计算字符串长度
+strcpy：拷贝字符串
+strcmp：比较字符串
+strncmp：比较字符串前n个字符
+*/
