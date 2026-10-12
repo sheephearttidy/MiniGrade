@@ -38,7 +38,7 @@ ErrCode   student_add(int id, const char* name, int score)
     log_info("添加学生: id=%d, name=%s, score=%d\n", id, name, score);
     return OK;
 
-};
+}
 
 Student* student_find_by_id(int id) // 查找学生
 {
